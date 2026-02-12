@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node --version:*)",
+      "Bash(npm --version:*)",
+      "Bash(npx:*)",
+      "WebFetch(domain:nitro.build)",
+      "WebFetch(domain:crossws.unjs.io)",
+      "WebFetch(domain:crossws.h3.dev)",
+      "WebFetch(domain:socket.io)",
+      "Bash(npm install:*)",
+      "Bash(git init:*)"
+    ]
+  }
+}
