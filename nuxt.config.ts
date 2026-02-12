@@ -1,3 +1,4 @@
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
@@ -20,6 +21,6 @@ export default defineNuxtConfig({
   },
 
   runtimeConfig: {
-    mongodbUri: '',
+    mongodbUri: process.env.NUXT_MONGODB_URI,
   },
 })
