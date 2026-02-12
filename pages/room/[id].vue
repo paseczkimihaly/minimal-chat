@@ -27,11 +27,17 @@ const route = useRoute()
 const roomId = route.params.id as string
 
 const { username, userColor, setUsername } = useUsername()
+const { addRoom } = useRecentRooms()
 
 // Fetch room data (SSR-safe)
 const { data: room, error: roomError } = await useFetch(`/api/rooms/${roomId}`)
 if (roomError.value) {
   throw createError({ statusCode: 404, statusMessage: 'Room not found' })
+}
+
+// Track this room in recent rooms
+if (room.value) {
+  addRoom(roomId, room.value.name)
 }
 
 // Fetch message history (SSR-safe)

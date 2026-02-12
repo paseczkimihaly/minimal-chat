@@ -59,6 +59,39 @@
           </button>
         </div>
 
+        <!-- Recent Rooms -->
+        <div v-if="recentRooms.length" class="mt-6">
+          <div class="flex items-center gap-3 mb-3">
+            <div class="flex-1 h-px bg-gray-200" />
+            <span class="text-xs text-gray-400 uppercase">recent rooms</span>
+            <div class="flex-1 h-px bg-gray-200" />
+          </div>
+          <ul class="space-y-1">
+            <li
+              v-for="r in recentRooms"
+              :key="r.id"
+              class="flex items-center gap-1 group"
+            >
+              <NuxtLink
+                :to="`/room/${r.id}`"
+                class="flex-1 flex items-center justify-between px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors"
+              >
+                <span class="font-medium text-gray-700 truncate">{{ r.name }}</span>
+                <span class="text-[11px] text-gray-400 shrink-0 ml-2">{{ formatVisited(r.visitedAt) }}</span>
+              </NuxtLink>
+              <button
+                class="text-gray-300 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity px-1"
+                title="Remove"
+                @click="removeRoom(r.id)"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </li>
+          </ul>
+        </div>
+
         <p v-if="error" class="mt-4 text-sm text-red-500 text-center">{{ error }}</p>
       </template>
     </div>
@@ -67,10 +100,12 @@
 
 <script setup lang="ts">
 const { username, userColor, setUsername, setColor, clearUsername } = useUsername()
+const { recentRooms, removeRoom } = useRecentRooms()
 
 function onSet(name: string, color: string) {
   setUsername(name, color)
 }
+
 const roomName = ref('')
 const joinId = ref('')
 const creating = ref(false)
@@ -98,5 +133,16 @@ function joinRoom() {
   if (joinId.value.trim()) {
     navigateTo(`/room/${joinId.value.trim()}`)
   }
+}
+
+function formatVisited(iso: string): string {
+  const diff = Date.now() - new Date(iso).getTime()
+  const mins = Math.floor(diff / 60000)
+  if (mins < 1) return 'just now'
+  if (mins < 60) return `${mins}m ago`
+  const hours = Math.floor(mins / 60)
+  if (hours < 24) return `${hours}h ago`
+  const days = Math.floor(hours / 24)
+  return `${days}d ago`
 }
 </script>

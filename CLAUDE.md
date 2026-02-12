@@ -7,8 +7,8 @@ A registration-free real-time chat app. Users pick a username (stored in session
 ## Tech Stack
 
 - **Framework**: Nuxt 3 with TypeScript
-- **Frontend**: Vue 3 Composition API (`<script setup>`), Tailwind CSS, @vueuse/core
-- **Backend**: Nitro server routes + native WebSocket (CrossWS pub/sub)
+- **Frontend**: Vue 3 Composition API with TypeScript (`<script setup lang="ts">`), Tailwind CSS, @vueuse/core
+- **Backend**: Nitro server routes + native WebSocket + TypeScript (CrossWS pub/sub)
 - **Database**: MongoDB (native `mongodb` driver, no Mongoose)
 - **ID Generation**: nanoid (12-char URL-friendly IDs)
 
