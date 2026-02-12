@@ -22,5 +22,6 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     mongodbUri: process.env.NUXT_MONGODB_URI,
+    betterAuthSecret: process.env.BETTER_AUTH_SECRET,
   },
 })

@@ -3,6 +3,7 @@ import { USER_COLORS } from '~/types'
 export function useUsername() {
   const username = useState<string | null>('username', () => null)
   const userColor = useState<string>('userColor', () => USER_COLORS[0])
+  const isGuest = useState<boolean>('isGuest', () => true)
 
   if (import.meta.client) {
     const stored = sessionStorage.getItem('chat-username')
@@ -32,11 +33,20 @@ export function useUsername() {
 
   function clearUsername() {
     username.value = null
+    isGuest.value = true
     if (import.meta.client) {
       sessionStorage.removeItem('chat-username')
       sessionStorage.removeItem('chat-color')
     }
   }
 
-  return { username, userColor, setUsername, setColor, clearUsername }
+  function setFromAuth(name: string) {
+    username.value = name
+    isGuest.value = false
+    if (import.meta.client) {
+      sessionStorage.setItem('chat-username', name)
+    }
+  }
+
+  return { username, userColor, isGuest, setUsername, setColor, clearUsername, setFromAuth }
 }

@@ -10,7 +10,13 @@
       "WebFetch(domain:socket.io)",
       "Bash(npm install:*)",
       "Bash(git init:*)",
-      "Bash(npm ls:*)"
+      "Bash(npm ls:*)",
+      "WebFetch(domain:www.better-auth.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(openssl rand:*)",
+      "Bash(npm run dev:*)",
+      "Bash(node -e:*)",
+      "Bash(curl:*)"
     ]
   }
 }

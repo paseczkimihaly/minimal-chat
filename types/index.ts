@@ -1,3 +1,11 @@
+export interface AuthUser {
+  id: string
+  name: string
+  email: string
+  username: string
+  displayUsername: string
+}
+
 export interface Room {
   _id: string
   name: string
