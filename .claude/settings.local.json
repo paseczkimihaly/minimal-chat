@@ -9,7 +9,8 @@
       "WebFetch(domain:crossws.h3.dev)",
       "WebFetch(domain:socket.io)",
       "Bash(npm install:*)",
-      "Bash(git init:*)"
+      "Bash(git init:*)",
+      "Bash(npm ls:*)"
     ]
   }
 }

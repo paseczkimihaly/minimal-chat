@@ -1,6 +1,6 @@
 <template>
   <div v-if="message.type === 'system'" class="text-center py-1">
-    <span class="text-xs text-gray-400 italic">{{ message.content }}</span>
+    <span class="text-xs text-gray-400 dark:text-gray-500 italic">{{ message.content }}</span>
   </div>
 
   <div
@@ -17,7 +17,7 @@
     </div>
     <div
       class="max-w-[75%] rounded-xl px-3 py-2"
-      :class="isOwn ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'"
+      :class="isOwn ? 'bg-blue-600 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-gray-100'"
     >
       <p
         v-if="!isOwn"
@@ -27,7 +27,7 @@
         {{ message.username }}
       </p>
       <p class="text-sm break-words">{{ message.content }}</p>
-      <p class="text-[10px] mt-0.5 text-right" :class="isOwn ? 'text-blue-200' : 'text-gray-400'">
+      <p class="text-[10px] mt-0.5 text-right" :class="isOwn ? 'text-blue-200' : 'text-gray-400 dark:text-gray-500'">
         {{ formattedTime }}
       </p>
     </div>

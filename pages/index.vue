@@ -1,26 +1,26 @@
 <template>
   <div class="min-h-screen flex items-center justify-center">
-    <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md mx-4">
-      <h1 class="text-2xl font-bold text-center mb-6">Chat Rooms</h1>
+    <div class="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-8 w-full max-w-md mx-4">
+      <h1 class="text-2xl font-bold text-center dark:text-gray-100 mb-6">Chat Rooms</h1>
 
       <UsernamePrompt v-if="!username" @set="onSet" />
 
       <template v-else>
-        <div class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+        <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-6">
           <ColorPicker v-model="userColor" @update:model-value="setColor" />
           <span>Chatting as <strong>{{ username }}</strong></span>
-          <button class="text-blue-500 hover:text-blue-700 underline text-xs" @click="clearUsername">
+          <button class="text-blue-500 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 underline text-xs" @click="clearUsername">
             change
           </button>
         </div>
 
         <!-- Create Room -->
         <div class="mb-6">
-          <label class="block text-sm font-medium text-gray-700 mb-1">Room Name</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Room Name</label>
           <input
             v-model="roomName"
             type="text"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400"
             placeholder="My awesome room"
             maxlength="50"
             @keyup.enter="createRoom"
@@ -35,23 +35,23 @@
         </div>
 
         <div class="flex items-center gap-3 my-6">
-          <div class="flex-1 h-px bg-gray-200" />
-          <span class="text-xs text-gray-400 uppercase">or join existing</span>
-          <div class="flex-1 h-px bg-gray-200" />
+          <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+          <span class="text-xs text-gray-400 dark:text-gray-500 uppercase">or join existing</span>
+          <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
         </div>
 
         <!-- Join Room -->
         <div>
-          <label class="block text-sm font-medium text-gray-700 mb-1">Room ID</label>
+          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Room ID</label>
           <input
             v-model="joinId"
             type="text"
-            class="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="w-full border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-100 dark:placeholder-gray-400"
             placeholder="Paste room ID here"
             @keyup.enter="joinRoom"
           />
           <button
-            class="mt-2 w-full bg-gray-800 text-white py-2.5 rounded-lg hover:bg-gray-900 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
+            class="mt-2 w-full bg-gray-800 dark:bg-gray-600 text-white py-2.5 rounded-lg hover:bg-gray-900 dark:hover:bg-gray-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors text-sm font-medium"
             :disabled="!joinId.trim()"
             @click="joinRoom"
           >
@@ -62,9 +62,9 @@
         <!-- Recent Rooms -->
         <div v-if="recentRooms.length" class="mt-6">
           <div class="flex items-center gap-3 mb-3">
-            <div class="flex-1 h-px bg-gray-200" />
-            <span class="text-xs text-gray-400 uppercase">recent rooms</span>
-            <div class="flex-1 h-px bg-gray-200" />
+            <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
+            <span class="text-xs text-gray-400 dark:text-gray-500 uppercase">recent rooms</span>
+            <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700" />
           </div>
           <ul class="space-y-1">
             <li
@@ -74,13 +74,13 @@
             >
               <NuxtLink
                 :to="`/room/${r.id}`"
-                class="flex-1 flex items-center justify-between px-3 py-2 rounded-lg text-sm hover:bg-gray-100 transition-colors"
+                class="flex-1 flex items-center justify-between px-3 py-2 rounded-lg text-sm hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
               >
-                <span class="font-medium text-gray-700 truncate">{{ r.name }}</span>
-                <span class="text-[11px] text-gray-400 shrink-0 ml-2">{{ formatVisited(r.visitedAt) }}</span>
+                <span class="font-medium text-gray-700 dark:text-gray-300 truncate">{{ r.name }}</span>
+                <span class="text-[11px] text-gray-400 dark:text-gray-500 shrink-0 ml-2">{{ formatVisited(r.visitedAt) }}</span>
               </NuxtLink>
               <button
-                class="text-gray-300 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity px-1"
+                class="text-gray-300 dark:text-gray-600 hover:text-red-400 dark:hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity px-1"
                 title="Remove"
                 @click="removeRoom(r.id)"
               >

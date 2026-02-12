@@ -2,20 +2,20 @@
   <div class="relative inline-block">
     <button
       type="button"
-      class="w-5 h-5 rounded-full border border-gray-300 hover:scale-110 transition-transform"
+      class="w-5 h-5 rounded-full border border-gray-300 dark:border-gray-600 hover:scale-110 transition-transform"
       :style="{ backgroundColor: modelValue }"
       @click="open = !open"
     />
     <div
       v-if="open"
-      class="absolute z-50 mt-2 bg-white rounded-lg shadow-lg border border-gray-200 p-2 flex flex-wrap gap-1.5 w-40"
+      class="absolute z-50 mt-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 p-2 flex flex-wrap gap-1.5 w-40"
     >
       <button
         v-for="c in USER_COLORS"
         :key="c"
         type="button"
         class="w-6 h-6 rounded-full border-2 transition-transform hover:scale-110"
-        :class="modelValue === c ? 'border-gray-800 scale-110' : 'border-transparent'"
+        :class="modelValue === c ? 'border-gray-800 dark:border-white scale-110' : 'border-transparent'"
         :style="{ backgroundColor: c }"
         @click="select(c)"
       />

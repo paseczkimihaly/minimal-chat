@@ -5,6 +5,12 @@ export default defineNuxtConfig({
 
   modules: ['@nuxtjs/tailwindcss'],
 
+  tailwindcss: {
+    config: {
+      darkMode: 'class',
+    },
+  },
+
   css: ['~/assets/css/main.css'],
 
   nitro: {
