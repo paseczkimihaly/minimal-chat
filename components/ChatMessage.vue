@@ -5,13 +5,19 @@
 
   <div
     v-else-if="message.type === 'message'"
-    class="flex mb-2"
+    class="flex mb-2 items-end gap-2"
     :class="isOwn ? 'justify-end' : 'justify-start'"
   >
     <div
+      v-if="!isOwn"
+      class="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold text-black/50"
+      :style="{ backgroundColor: message.color || '#9ca3af' }"
+    >
+      {{ initials }}
+    </div>
+    <div
       class="max-w-[75%] rounded-xl px-3 py-2"
-      :class="isOwn ? 'text-white' : 'text-gray-900'"
-      :style="bubbleStyle"
+      :class="isOwn ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-900'"
     >
       <p
         v-if="!isOwn"
@@ -21,7 +27,7 @@
         {{ message.username }}
       </p>
       <p class="text-sm break-words">{{ message.content }}</p>
-      <p class="text-[10px] mt-0.5 text-right" :class="isOwn ? 'text-blue-200' : 'opacity-50'">
+      <p class="text-[10px] mt-0.5 text-right" :class="isOwn ? 'text-blue-200' : 'text-gray-400'">
         {{ formattedTime }}
       </p>
     </div>
@@ -40,12 +46,9 @@ const isOwn = computed(() =>
   props.message.type === 'message' && props.message.username === props.currentUser
 )
 
-const bubbleStyle = computed(() => {
-  if (props.message.type !== 'message') return {}
-  if (isOwn.value) {
-    return { backgroundColor: '#2563eb' } // blue-600
-  }
-  return { backgroundColor: props.message.color || '#e5e7eb' }
+const initials = computed(() => {
+  if (props.message.type !== 'message') return ''
+  return props.message.username.slice(0, 2).toUpperCase()
 })
 
 function darkenColor(hex: string, percent: number): string {
