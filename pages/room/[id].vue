@@ -26,7 +26,7 @@ import type { Message, WsServerPayload } from '~/types'
 const route = useRoute()
 const roomId = route.params.id as string
 
-const { username, setUsername } = useUsername()
+const { username, userColor, setUsername } = useUsername()
 
 // Fetch room data (SSR-safe)
 const { data: room, error: roomError } = await useFetch(`/api/rooms/${roomId}`)
@@ -42,8 +42,8 @@ const liveMessages = ref<WsServerPayload[]>([])
 const participantCount = ref(0)
 const socketStatus = ref('CONNECTING')
 
-let joinRoomFn: ((username: string) => void) | null = null
-let sendMessageFn: ((username: string, content: string) => void) | null = null
+let joinRoomFn: ((username: string, color: string) => void) | null = null
+let sendMessageFn: ((username: string, color: string, content: string) => void) | null = null
 
 onMounted(() => {
   const socket = useChatSocket(roomId)
@@ -56,7 +56,7 @@ onMounted(() => {
   sendMessageFn = socket.sendMessage
 
   if (username.value) {
-    joinRoomFn(username.value)
+    joinRoomFn(username.value, userColor.value)
   }
 })
 
@@ -65,20 +65,21 @@ const allMessages = computed<WsServerPayload[]>(() => {
   const hist: WsServerPayload[] = (history.value ?? []).map((m) => ({
     type: 'message' as const,
     username: m.username,
+    color: m.color || '#e5e7eb',
     content: m.content,
     createdAt: typeof m.createdAt === 'string' ? m.createdAt : new Date(m.createdAt).toISOString(),
   }))
   return [...hist, ...liveMessages.value]
 })
 
-function onUsernameSet(name: string) {
-  setUsername(name)
-  joinRoomFn?.(name)
+function onUsernameSet(name: string, color: string) {
+  setUsername(name, color)
+  joinRoomFn?.(name, userColor.value)
 }
 
 function onSend(content: string) {
   if (username.value && content.trim()) {
-    sendMessageFn?.(username.value, content.trim())
+    sendMessageFn?.(username.value, userColor.value, content.trim())
   }
 }
 </script>

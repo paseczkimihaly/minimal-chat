@@ -35,13 +35,13 @@ export function useChatSocket(roomId: string) {
     },
   })
 
-  function joinRoom(username: string) {
-    const payload: WsClientPayload = { type: 'join', username }
+  function joinRoom(username: string, color: string) {
+    const payload: WsClientPayload = { type: 'join', username, color }
     send(JSON.stringify(payload))
   }
 
-  function sendMessage(username: string, content: string) {
-    const payload: WsClientPayload = { type: 'message', username, content }
+  function sendMessage(username: string, color: string, content: string) {
+    const payload: WsClientPayload = { type: 'message', username, color, content }
     send(JSON.stringify(payload))
   }
 

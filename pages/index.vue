@@ -3,15 +3,16 @@
     <div class="bg-white rounded-xl shadow-lg p-8 w-full max-w-md mx-4">
       <h1 class="text-2xl font-bold text-center mb-6">Chat Rooms</h1>
 
-      <UsernamePrompt v-if="!username" @set="setUsername" />
+      <UsernamePrompt v-if="!username" @set="onSet" />
 
       <template v-else>
-        <p class="text-sm text-gray-500 mb-6">
-          Chatting as <strong>{{ username }}</strong>
-          <button class="text-blue-500 hover:text-blue-700 underline ml-2 text-xs" @click="clearUsername">
+        <div class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+          <ColorPicker v-model="userColor" @update:model-value="setColor" />
+          <span>Chatting as <strong>{{ username }}</strong></span>
+          <button class="text-blue-500 hover:text-blue-700 underline text-xs" @click="clearUsername">
             change
           </button>
-        </p>
+        </div>
 
         <!-- Create Room -->
         <div class="mb-6">
@@ -65,7 +66,11 @@
 </template>
 
 <script setup lang="ts">
-const { username, setUsername, clearUsername } = useUsername()
+const { username, userColor, setUsername, setColor, clearUsername } = useUsername()
+
+function onSet(name: string, color: string) {
+  setUsername(name, color)
+}
 const roomName = ref('')
 const joinId = ref('')
 const creating = ref(false)

@@ -33,6 +33,7 @@ export default defineWebSocketHandler({
       }
       roomParticipants.get(roomId)!.add(peer.id)
       ;(peer as any)._username = payload.username
+      ;(peer as any)._color = payload.color
 
       const systemMsg: WsServerPayload = {
         type: 'system',
@@ -56,6 +57,7 @@ export default defineWebSocketHandler({
       const message: Message = {
         roomId,
         username: payload.username,
+        color: payload.color,
         content: payload.content,
         createdAt: now,
       }
@@ -64,6 +66,7 @@ export default defineWebSocketHandler({
       const outgoing: WsServerPayload = {
         type: 'message',
         username: payload.username,
+        color: payload.color,
         content: payload.content,
         createdAt: now.toISOString(),
       }
